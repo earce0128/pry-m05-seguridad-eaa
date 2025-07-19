@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.CorsFilter;
 import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.CotizacionRest;
+import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.GenericExceptionMapper;
 
 @Configuration
 public class ConfiguracionJersey extends ResourceConfig {
@@ -19,5 +20,6 @@ public class ConfiguracionJersey extends ResourceConfig {
 		
 		this.register(CotizacionRest.class);
 		this.register(CorsFilter.class);
+		this.register(GenericExceptionMapper.class);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.com.qtx.cotizadorv1ds.core.ICotizador;
@@ -16,11 +17,12 @@ import mx.com.qtx.cotizadorv1ds.core.componentes.Componente;
 import mx.com.qtx.cotizadorv1ds.core.cotizaciones.ComponenteInvalidoException;
 import mx.com.qtx.cotizadorv1ds.core.cotizaciones.Cotizacion;
 import mx.com.qtx.cotizadorv1ds.core.cotizaciones.DetalleCotizacion;
-import mx.com.qtx.cotizadorv1ds.persistencia.CotizacionDao;
 
 @Service
 public class CotizadorPersistente implements ICotizador {
 	private Map<Componente,Integer> mapCompsYcants;
+	
+	@Autowired
 	private IGestorPersistenciaCotizaciones gestorPersistencia;
 	
 	private static Logger bitacora = LoggerFactory.getLogger(CotizadorPersistente.class);
@@ -28,7 +30,6 @@ public class CotizadorPersistente implements ICotizador {
 	public CotizadorPersistente() {
 		super();
 		this.mapCompsYcants = new HashMap<>();
-		this.gestorPersistencia = new CotizacionDao();
 	}
 
 	@Override

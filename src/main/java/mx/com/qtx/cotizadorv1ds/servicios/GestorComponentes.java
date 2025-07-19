@@ -5,20 +5,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import mx.com.qtx.cotizadorv1ds.core.IServicioComponentes;
 import mx.com.qtx.cotizadorv1ds.core.componentes.Componente;
 import mx.com.qtx.cotizadorv1ds.core.componentes.PcBuilder;
 import mx.com.qtx.cotizadorv1ds.core.promos.Promocion;
 import mx.com.qtx.cotizadorv1ds.core.promos.PromocionBuilder;
-import mx.com.qtx.cotizadorv1ds.persistencia.ComponenteDao;
+//import mx.com.qtx.cotizadorv1ds.persistencia.ComponenteDao;
 
+@Service
 public class GestorComponentes implements IServicioComponentes {
 	
+	@Autowired
 	private IGestorPersistenciaComponentes gestorPersistencia;
 
 	public GestorComponentes() {
 		super();
-		this.gestorPersistencia = new ComponenteDao();
+		//this.gestorPersistencia = new ComponenteDao();
 	}
 
 	@Override

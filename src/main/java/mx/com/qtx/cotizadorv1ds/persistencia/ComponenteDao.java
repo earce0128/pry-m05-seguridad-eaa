@@ -11,12 +11,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import mx.com.qtx.cotizadorv1ds.servicios.ComponenteDTO;
 import mx.com.qtx.cotizadorv1ds.servicios.DetallePromoDsctoXCantDTO;
 import mx.com.qtx.cotizadorv1ds.servicios.DetallePromocionDTO;
 import mx.com.qtx.cotizadorv1ds.servicios.IGestorPersistenciaComponentes;
 import mx.com.qtx.cotizadorv1ds.servicios.PromocionDTO;
 
+@Repository
 public class ComponenteDao implements IGestorPersistenciaComponentes {
     private final String url;
     private final String user;

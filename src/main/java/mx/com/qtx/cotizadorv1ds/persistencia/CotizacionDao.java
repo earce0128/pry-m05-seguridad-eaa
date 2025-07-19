@@ -3,12 +3,15 @@ package mx.com.qtx.cotizadorv1ds.persistencia;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.stereotype.Repository;
+
 import mx.com.qtx.cotizadorv1ds.servicios.CotizacionDTO;
 import mx.com.qtx.cotizadorv1ds.servicios.DetalleCotizacionDTO;
 import mx.com.qtx.cotizadorv1ds.servicios.IGestorPersistenciaCotizaciones;
 
 import java.math.BigDecimal;
 
+@Repository
 public class CotizacionDao implements IGestorPersistenciaCotizaciones {
     private final String url;
     private final String user;

@@ -1,8 +1,5 @@
 package mx.com.qtx.cotizadorv1ds.web;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mx.com.qtx.cotizadorv1ds.core.ICotizador;
-import mx.com.qtx.cotizadorv1ds.core.IServicioComponentes;
+//import mx.com.qtx.cotizadorv1ds.core.IServicioComponentes;
 import mx.com.qtx.cotizadorv1ds.core.cotizaciones.Cotizacion;
-import mx.com.qtx.cotizadorv1ds.core.cotizaciones.DetalleCotizacion;
+//import mx.com.qtx.cotizadorv1ds.core.cotizaciones.DetalleCotizacion;
 //import mx.com.qtx.cotizadorv1ds.servicios.CotizadorPersistente;
 //import mx.com.qtx.cotizadorv1ds.servicios.GestorComponentes;
 
@@ -23,7 +20,8 @@ public class CtrlRaiz {
 	
 	@Autowired
 	private ICotizador cotizador;
-	//private IServicioComponentes gestorComponentes;
+//	@Autowired
+//	private IServicioComponentes gestorComponentes;
 	
 	private static Logger bitacora = LoggerFactory.getLogger(CtrlRaiz.class);
 	
@@ -76,9 +74,5 @@ public class CtrlRaiz {
 		
 		return "vistaBuscarCotizacion";
 	}
-	
-	
-	
-	
 
 }
