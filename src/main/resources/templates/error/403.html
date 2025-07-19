@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Prohibido - Error 403</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #ff9800;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        
+        .error-icon {
+            font-size: 5rem;
+            color: #ff9800;
+            margin-bottom: 1.5rem;
+            animation: shake 1.5s infinite;
+        }
+        
+        .error-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #212529;
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .card {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.7);
+            margin-top: 1.5rem;
+        }
+        
+        .card-header {
+            background: transparent;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-weight: 600;
+            padding: 1rem;
+            color: #495057;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+            text-align: left;
+        }
+        
+        .card-body ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0;
+        }
+        
+        .card-body li {
+            margin-bottom: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .card-body i {
+            color: #ff9800;
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .btn-primary {
+            background: #0d6efd;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+            margin: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(13, 110, 253, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(108, 117, 125, 0.2);
+            margin: 0.5rem;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(108, 117, 125, 0.3);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .footer {
+            color: #6c757d;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        @media (max-width: 576px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-icon {
+                font-size: 3.5rem;
+            }
+            
+            .error-title {
+                font-size: 1.8rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <div class="error-code">403</div>
+            <div class="error-icon">
+                <i class="fas fa-ban"></i>
+            </div>
+            <h1 class="error-title">Acceso Prohibido</h1>
+            <p class="error-message">
+                No tienes los permisos necesarios para acceder a este recurso.<br>
+                Por favor, verifica tus credenciales o contacta al administrador si crees que esto es un error.
+            </p>
+            
+            <div class="action-buttons">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Ir a la página de inicio
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-envelope me-2"></i>Contactar al administrador
+                </a>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-2"></i>¿Por qué estoy viendo esto?
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><i class="fas fa-lock"></i> Este recurso requiere privilegios especiales de acceso</li>
+                        <li><i class="fas fa-user"></i> Tu cuenta actual no tiene los permisos necesarios</li>
+                        <li><i class="fas fa-key"></i> Es posible que necesites iniciar sesión con otra cuenta</li>
+                        <li><i class="fas fa-shield-alt"></i> El acceso está restringido por razones de seguridad</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        © 2023 Sistema Seguro | ID de error: AUTH-403-<span id="error-id"></span>
+    </div>
+    
+    <!-- Bootstrap JS con Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Generar un ID de error aleatorio
+        const errorId = Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('error-id').textContent = errorId;
+        
+        // Agregar fecha y hora actual
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const dateString = now.toLocaleDateString();
+        document.querySelector('.footer').innerHTML += ` | ${dateString} ${timeString}`;
+    </script>
+</body>
+</html>

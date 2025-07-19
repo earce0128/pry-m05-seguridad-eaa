@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cotizaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1e3c72;
+            --secondary-color: #2a5298;
+            --accent-color: #ff6b6b;
+            --light-bg: #f8f9fa;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .app-logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .main-container {
+            flex: 1;
+            padding: 40px 0;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+        }
+        
+        .module-content {
+            padding: 25px;
+        }
+        
+        .module-link {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .module-link:hover {
+            background-color: #e6f0ff;
+            transform: translateX(5px);
+            color: var(--secondary-color);
+        }
+        
+        .module-link i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .app-footer {
+            background-color: white;
+            padding: 20px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .stats-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .stats-label {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .module-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .quick-access {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header class="app-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="app-logo">
+                    <i class="fas fa-file-invoice-dollar me-2"></i>Sistema Cotizador
+                </div>
+                <div>
+                    <span class="me-3">Bienvenido, <strong>Administrador</strong></span> <!-- Colocar usuario logeado -->
+                    <button class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>Cerrar sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-container">
+        <div class="container">
+            <!-- Sección de Bienvenida -->
+            <div class="welcome-section">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1><i class="fas fa-home me-3"></i>Panel Principal</h1>
+                        <p class="lead">Gestione cotizaciones, componentes y accesos desde esta plataforma centralizada</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="bg-white text-dark d-inline-block p-3 rounded-pill">
+                            <i class="fas fa-calendar-check me-2 text-primary"></i>
+                            <span id="current-date"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--             Estadísticas Rápidas -->
+<!--             <div class="row mb-4"> -->
+<!--                 <div class="col-md-3"> -->
+<!--                     <div class="stats-card"> -->
+<!--                         <div class="stats-icon"> -->
+<!--                             <i class="fas fa-file-invoice"></i> -->
+<!--                         </div> -->
+<!--                         <div class="stats-number">142</div> -->
+<!--                         <div class="stats-label">Cotizaciones Activas</div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-md-3"> -->
+<!--                     <div class="stats-card"> -->
+<!--                         <div class="stats-icon"> -->
+<!--                             <i class="fas fa-microchip"></i> -->
+<!--                         </div> -->
+<!--                         <div class="stats-number">78</div> -->
+<!--                         <div class="stats-label">Componentes Registrados</div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-md-3"> -->
+<!--                     <div class="stats-card"> -->
+<!--                         <div class="stats-icon"> -->
+<!--                             <i class="fas fa-users"></i> -->
+<!--                         </div> -->
+<!--                         <div class="stats-number">24</div> -->
+<!--                         <div class="stats-label">Usuarios Activos</div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-md-3"> -->
+<!--                     <div class="stats-card"> -->
+<!--                         <div class="stats-icon"> -->
+<!--                             <i class="fas fa-chart-line"></i> -->
+<!--                         </div> -->
+<!--                         <div class="stats-number">92%</div> -->
+<!--                         <div class="stats-label">Eficiencia Operativa</div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+
+            <!-- Módulos Principales -->
+            <div class="row">
+                <!-- Módulo de Cotizaciones -->
+                <div class="col-lg-6 mb-4">
+                    <div class="dashboard-card">
+                        <div class="module-header">
+                            <h3><i class="fas fa-file-invoice-dollar me-2"></i>Cotizaciones</h3>
+                        </div>
+                        <div class="module-content">
+                            <a href="/appCot/buscarCotizacion" class="module-link">
+                                <i class="fas fa-search"></i>Buscar Cotizaciones por Número
+                            </a>
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-plus-circle"></i>Crear Nueva Cotización -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-history"></i>Historial de Cotizaciones -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-chart-pie"></i>Reportes de Cotizaciones -->
+<!--                             </a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo de Componentes -->
+                <div class="col-lg-6 mb-4">
+                    <div class="dashboard-card">
+                        <div class="module-header">
+                            <h3><i class="fas fa-microchip me-2"></i>Componentes</h3>
+                        </div>
+                        <div class="module-content">
+                            <a href="/appCot/buscarComponentePorCategoria" class="module-link">
+                                <i class="fas fa-search"></i>Buscar Componente por Categoría
+                            </a>
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-box-open"></i>Inventario de Componentes -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-tags"></i>Gestionar Categorías -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-sync-alt"></i>Actualizar Precios -->
+<!--                             </a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo de Accesos -->
+                <div class="col-lg-6 mb-4">
+                    <div class="dashboard-card">
+                        <div class="module-header">
+                            <h3><i class="fas fa-lock me-2"></i>Accesos</h3>
+                        </div>
+                        <div class="module-content">
+                            <a href="/appCot/altaUsuario" class="module-link">
+                                <i class="fas fa-user-plus"></i>Crear Usuario
+                            </a>
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-users-cog"></i>Administrar Usuarios -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-user-shield"></i>Permisos y Roles -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-history"></i>Registro de Accesos -->
+<!--                             </a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo de Generales -->
+                <div class="col-lg-6 mb-4">
+                    <div class="dashboard-card">
+                        <div class="module-header">
+                            <h3><i class="fas fa-cog me-2"></i>Generales</h3>
+                        </div>
+                        <div class="module-content">
+                            <a href="/appCot/infoGeneral" class="module-link">
+                                <i class="fas fa-info-circle"></i>Información General
+                            </a>
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-sliders-h"></i>Configuración del Sistema -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-database"></i>Respaldo y Restauración -->
+<!--                             </a> -->
+<!--                             <a href="#" class="module-link"> -->
+<!--                                 <i class="fas fa-question-circle"></i>Ayuda y Soporte -->
+<!--                             </a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acceso Rápido -->
+            <div class="quick-access">
+                <h4 class="mb-4"><i class="fas fa-bolt me-2 text-warning"></i>Acceso Rápido</h4>
+                <div class="row">
+                    <div class="col-md-3 col-6 mb-3">
+                        <a href="/appCot/buscarCotizacion" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-1"></i>Buscar Cotización
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <a href="/appCot/buscarComponentePorCategoria" class="btn btn-success w-100">
+                            <i class="fas fa-microchip me-1"></i>Buscar Componente
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <a href="/appCot/altaUsuario" class="btn btn-info w-100">
+                            <i class="fas fa-user-plus me-1"></i>Crear Usuario
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <a href="/appCot/infoGeneral" class="btn btn-secondary w-100">
+                            <i class="fas fa-info-circle me-1"></i>Información General
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="app-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2025 Sistema Cotizador. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Versión 1.0.0 | Términos y Condiciones></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para mostrar la fecha actual
+        function mostrarFecha() {
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fecha = new Date();
+            document.getElementById('current-date').textContent = fecha.toLocaleDateString('es-ES', opciones);
+        }
+        
+        // Mostrar fecha al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarFecha();
+            
+            // Simular carga de módulos
+            const cards = document.querySelectorAll('.dashboard-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 150 * index);
+            });
+        });
+    </script>
+</body>
+</html>
