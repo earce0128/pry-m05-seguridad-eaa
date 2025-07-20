@@ -1,5 +1,7 @@
 package mx.com.qtx.cotizadorv1ds;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -9,6 +11,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -46,32 +50,68 @@ public class ConfiguracionSeguridad {
 		return http.build();
 	}
 	
+	//Servicio de control de usuarios en memoria.
+//	@Bean
+//	UserDetailsService crearGestorDeUsuarios() {
+//		
+//		UserDetails usuarioEdgar = User.withDefaultPasswordEncoder()
+//									   .username("Edgar")
+//									   .password("passEdgar")
+//									   .roles("ADMIN","SISTEMAS")
+//									   .build();
+//		
+//		UserDetails usuarioAlex = User.withDefaultPasswordEncoder()
+//									  .username("Alex")
+//									  .password("passAlex")
+//									  .roles("VTAS")
+//									  .build();
+//		
+//		UserDetails usuarioLulu = User.withDefaultPasswordEncoder()
+//									  .username("Lulu")
+//									  .password("passlulu")
+//									  .roles("SISTEMAS")
+//									  .build();
+//		
+//		InMemoryUserDetailsManager gestorUsuarios = new InMemoryUserDetailsManager(usuarioEdgar,
+//																				   usuarioAlex,
+//																				   usuarioLulu);
+//		
+//		return gestorUsuarios;
+//	}
+	
+	//Servicio de control de usuarios para bd por esquema default de spring security.
 	@Bean
-	UserDetailsService crearGestorDeUsuarios() {
+	UserDetailsManager getGestorBdSegUsuarios(DataSource dataSource) {
 		
 		UserDetails usuarioEdgar = User.withDefaultPasswordEncoder()
-									   .username("Edgar")
-									   .password("passEdgar")
-									   .roles("ADMIN","SISTEMAS")
-									   .build();
-		
+				   .username("Edgar")
+				   .password("passEdgar")
+				   .roles("ADMIN","SISTEMAS")
+				   .build();
+
 		UserDetails usuarioAlex = User.withDefaultPasswordEncoder()
-									  .username("Alex")
-									  .password("passAlex")
-									  .roles("VTAS")
-									  .build();
-		
+				  .username("Alex")
+				  .password("passAlex")
+				  .roles("VTAS")
+				  .build();
+
 		UserDetails usuarioLulu = User.withDefaultPasswordEncoder()
-									  .username("Lulu")
-									  .password("passlulu")
-									  .roles("SISTEMAS")
-									  .build();
+				  .username("Lulu")
+				  .password("passlulu")
+				  .roles("SISTEMAS")
+				  .build();
 		
-		InMemoryUserDetailsManager gestorUsuarios = new InMemoryUserDetailsManager(usuarioEdgar,
-																				   usuarioAlex,
-																				   usuarioLulu);
+		// Es el componente que Spring recominda para usar su 
+		JdbcUserDetailsManager gestorUsuariosBdSeg = new JdbcUserDetailsManager(dataSource);
 		
-		return gestorUsuarios;
+		if(gestorUsuariosBdSeg.userExists(usuarioEdgar.getUsername()) == false)
+			gestorUsuariosBdSeg.createUser(usuarioEdgar);
+		if(gestorUsuariosBdSeg.userExists(usuarioAlex.getUsername()) == false)
+			gestorUsuariosBdSeg.createUser(usuarioAlex);
+		if(gestorUsuariosBdSeg.userExists(usuarioLulu.getUsername()) == false)
+			gestorUsuariosBdSeg.createUser(usuarioLulu);
+		
+		return gestorUsuariosBdSeg;
 	}
 
 }

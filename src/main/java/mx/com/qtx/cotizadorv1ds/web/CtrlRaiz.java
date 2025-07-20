@@ -3,6 +3,8 @@ package mx.com.qtx.cotizadorv1ds.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,21 +35,29 @@ public class CtrlRaiz {
 	
 	@GetMapping("/")
 	public String getWelcomeFile(Model modelo) {
+		bitacora.trace("getWelcomeFile()");
+		bitacora.debug("Principal: " + this.getPrincipal());
 		return "vistaRaiz";
 	}
 	
 	@GetMapping("/infoGeneral")
 	public String getVistaInfo(Model modelo) {
+		bitacora.trace("getVistaInfo()");
+		bitacora.debug("Principal: " + this.getPrincipal());
 		return "vistaInformacion";
 	}
 	
 	@GetMapping("/altaUsuario")
 	public String getCrearUsuario(Model modelo) {
+		bitacora.trace("getCrearUsuario()");
+		bitacora.debug("Principal: " + this.getPrincipal());
 		return "vistaComodin";
 	}
 	
 	@GetMapping("/buscarCompPorCat")
 	public String getBuscarCompPorCategoria(Model modelo) {
+		bitacora.trace("getBuscarCompPorCategoria()");
+		bitacora.debug("Principal: " + this.getPrincipal());
 		return "vistaComodin";
 	}
 	
@@ -56,6 +66,7 @@ public class CtrlRaiz {
 			@RequestParam(required = false) Long id,
 	        Model model) {
 			
+		bitacora.trace("buscarCotizacion()");
 		bitacora.info("Buscará cotización con id: " + id);
 			
 		if(id != null) {
@@ -82,7 +93,23 @@ public class CtrlRaiz {
 			}
 		} 
 		
+		
+		bitacora.debug("Principal: " + this.getPrincipal());
 		return "vistaBuscarCotizacion";
+	}
+	
+	private String getPrincipal() {
+		bitacora.warn("getPrincipal()");
+		Authentication autenticacion = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(autenticacion == null) {
+			bitacora.warn("Autenticacion nula");
+			return "nula";
+		}
+		
+		String nomPrincipal = autenticacion.getName();
+		
+		return nomPrincipal;
 	}
 
 }
