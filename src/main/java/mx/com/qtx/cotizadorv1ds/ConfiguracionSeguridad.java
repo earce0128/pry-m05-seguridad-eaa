@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -43,14 +45,15 @@ public class ConfiguracionSeguridad {
 		
 		http.authorizeHttpRequests((autorizador) -> autorizador
 			.requestMatchers("/css/**").permitAll()
-			.requestMatchers("vistaComodin.html").permitAll()
-			.requestMatchers("/infoGeneral","vistaInformacion.html").permitAll()
+			.requestMatchers("/vistaComodin.html").permitAll()
+			.requestMatchers("/infoGeneral","/vistaInformacion.html").permitAll()
 			.requestMatchers("/api/cot/**").hasRole("VTAS")
-			.requestMatchers("/buscarCotizacion","vistaBuscarCotizacion").hasRole("VTAS")
+			.requestMatchers("/buscarCotizacion","/vistaBuscarCotizacion").hasRole("VTAS")
 			.requestMatchers("/buscarCompPorCat").hasAnyRole("SISTEMAS","ADMIN")
 			.requestMatchers("/altaUsuario").hasRole("ADMIN")
 			.requestMatchers("/**").authenticated()
 			)
+			.csrf(config -> config.ignoringRequestMatchers("/api/cot/**"))
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(Customizer.withDefaults());
 		
@@ -153,6 +156,7 @@ public class ConfiguracionSeguridad {
 //		return gestorUsuariosBdSeg;
 //	}
 	
+	// Utiliza un esquema personalizado de BD con JDBC
 	@Bean
 	UserDetailsService getGestorBdUsuariosPersonalizada(DataSource dataSource) {
 
@@ -177,5 +181,14 @@ public class ConfiguracionSeguridad {
 
 		return gestorBdUsuariosPersonalizada;
 	}
+	
+	@Bean
+    AuthenticationManager publicarAuthenticationManagerDesdeConfiguracion(
+        AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    	bitacora.trace("publicarAuthenticationManagerDesdeConfiguracion()");
+    	AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
+    	bitacora.debug("authenticationManager instanciado:" + authenticationManager.getClass().getName());
+        return authenticationManager;
+    }
 
 }
