@@ -15,7 +15,7 @@ public class TestEncriptado {
 //                test_DelegatingPasswordEncoder_default();
 //                test_CifradoRepetido();
 //                test_distintosAlgoritmosCifrado();
-                proponerCifradoPasswordsApp();
+//                proponerCifradoPasswordsApp();
         }
 
         private static void test_distintosAlgoritmosCifrado() {

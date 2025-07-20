@@ -1,10 +1,10 @@
 Scripts bd de usuarios
 
-CREATE DATABASE  IF NOT EXISTS `segbdperssv6` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
-USE `segbdperssv6`;
+CREATE DATABASE  IF NOT EXISTS `bd_seg_cotizacion` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
+USE `bd_seg_cotizacion`;
 -- MySQL dump 10.13  Distrib 5.7.22, for Win64 (x86_64)
 --
--- Host: localhost    Database: segbdperssv6
+-- Host: localhost    Database: bd_seg_cotizacion
 -- ------------------------------------------------------
 -- Server version        5.7.22-log
 
@@ -43,7 +43,10 @@ CREATE TABLE `autoridad` (
 
 LOCK TABLES `autoridad` WRITE;
 /*!40000 ALTER TABLE `autoridad` DISABLE KEYS */;
-INSERT INTO `autoridad` VALUES (2,'ROLE_ADMIN','alex'),(1,'ROLE_AGENTE','alex'),(3,'ROLE_AGENTE','david'),(4,'ROLE_LOGISTICA','tavo');
+INSERT INTO `autoridad` VALUES (1,'ROLE_ADMIN','Edgar'),
+							   (2,'ROLE_SISTEMAS','Edgar'),
+							   (3,'ROLE_VTAS','Alex'),
+							   (4,'ROLE_SISTEMAS','Lulu');
 /*!40000 ALTER TABLE `autoridad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +71,9 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('alex','{bcrypt}$2a$10$6vEhoAxBN4IkpcceHslnPOGZw/lXv8piL6hQNaAGUbqWKa.cIIwca',1),('david','{bcrypt}$2a$10$i0rgAykQH/.dm.ZweInlTOmwbYohydgL3MFVYRUjZKWsuEe7jVIc6',1),('tavo','{bcrypt}$2a$10$H1EqBwIs5ZLnnePgZODr5uQpCxgw0wtpkTJhEEzuaSUzRQsFmFqhy',1);
+INSERT INTO `usuario` VALUES ('Edgar','{bcrypt}$2a$10$gLC1y0SA1z64M9xxG72KL.jefI8nIqAVnudfhmNv8oOUiXn9raMi6',1),
+							 ('Alex','{bcrypt}$2a$10$tBzzQtR/C/DcnuNImrTuy.WUc/Maf2Jvj2nArecvfZtldErs5P7Qa',1),
+							 ('Lulu','{bcrypt}$2a$10$1v1J6dEhK8BTMtIEaXPcm.izLDYSZ473Fjn19EQQ6ZrFB4BXLOkMC',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
