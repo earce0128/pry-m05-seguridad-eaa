@@ -44,16 +44,17 @@ public class ConfiguracionSeguridad {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
 		http.authorizeHttpRequests((autorizador) -> autorizador
+			.requestMatchers("/api/autenticacion").permitAll()
 			.requestMatchers("/css/**").permitAll()
 			.requestMatchers("/vistaComodin.html").permitAll()
 			.requestMatchers("/infoGeneral","/vistaInformacion.html").permitAll()
-			.requestMatchers("/api/cot/**").hasRole("VTAS")
+			.requestMatchers("/api/**").hasRole("VTAS")
 			.requestMatchers("/buscarCotizacion","/vistaBuscarCotizacion").hasRole("VTAS")
 			.requestMatchers("/buscarCompPorCat").hasAnyRole("SISTEMAS","ADMIN")
 			.requestMatchers("/altaUsuario").hasRole("ADMIN")
 			.requestMatchers("/**").authenticated()
 			)
-			.csrf(config -> config.ignoringRequestMatchers("/api/cot/**"))
+			.csrf(config -> config.ignoringRequestMatchers("/api/**"))
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(Customizer.withDefaults());
 		
