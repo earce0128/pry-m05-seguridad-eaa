@@ -41,6 +41,16 @@ public class CtrlRaiz {
 		return "vistaInformacion";
 	}
 	
+	@GetMapping("/altaUsuario")
+	public String getCrearUsuario(Model modelo) {
+		return "vistaComodin";
+	}
+	
+	@GetMapping("/buscarCompPorCat")
+	public String getBuscarCompPorCategoria(Model modelo) {
+		return "vistaComodin";
+	}
+	
 	@GetMapping("/buscarCotizacion")
 	public String buscarCotizacion(
 			@RequestParam(required = false) Long id,
