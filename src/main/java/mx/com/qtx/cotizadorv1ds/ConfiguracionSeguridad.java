@@ -80,24 +80,56 @@ public class ConfiguracionSeguridad {
 //	}
 	
 	//Servicio de control de usuarios para bd por esquema default de spring security.
+//	@Bean
+//	UserDetailsManager getGestorBdSegUsuarios(DataSource dataSource) {
+//		
+//		UserDetails usuarioEdgar = User.withDefaultPasswordEncoder()
+//				   .username("Edgar")
+//				   .password("passEdgar")
+//				   .roles("ADMIN","SISTEMAS")
+//				   .build();
+//
+//		UserDetails usuarioAlex = User.withDefaultPasswordEncoder()
+//				  .username("Alex")
+//				  .password("passAlex")
+//				  .roles("VTAS")
+//				  .build();
+//
+//		UserDetails usuarioLulu = User.withDefaultPasswordEncoder()
+//				  .username("Lulu")
+//				  .password("passlulu")
+//				  .roles("SISTEMAS")
+//				  .build();
+//		
+//		// Es el componente que Spring recominda para usar su 
+//		JdbcUserDetailsManager gestorUsuariosBdSeg = new JdbcUserDetailsManager(dataSource);
+//		
+//		if(gestorUsuariosBdSeg.userExists(usuarioEdgar.getUsername()) == false)
+//			gestorUsuariosBdSeg.createUser(usuarioEdgar);
+//		if(gestorUsuariosBdSeg.userExists(usuarioAlex.getUsername()) == false)
+//			gestorUsuariosBdSeg.createUser(usuarioAlex);
+//		if(gestorUsuariosBdSeg.userExists(usuarioLulu.getUsername()) == false)
+//			gestorUsuariosBdSeg.createUser(usuarioLulu);
+//		
+//		return gestorUsuariosBdSeg;
+//	}
+	
+	//Servicio de control de usuarios para bd por esquema default de spring security con password encriptado.
 	@Bean
 	UserDetailsManager getGestorBdSegUsuarios(DataSource dataSource) {
 		
-		UserDetails usuarioEdgar = User.withDefaultPasswordEncoder()
-				   .username("Edgar")
-				   .password("passEdgar")
+		UserDetails usuarioEdgar = User.withUsername("Edgar")
+				   .password("{bcrypt}$2a$10$gLC1y0SA1z64M9xxG72KL.jefI8nIqAVnudfhmNv8oOUiXn9raMi6")
 				   .roles("ADMIN","SISTEMAS")
 				   .build();
 
-		UserDetails usuarioAlex = User.withDefaultPasswordEncoder()
-				  .username("Alex")
-				  .password("passAlex")
+		UserDetails usuarioAlex = User.withUsername("Alex")
+				  .password("{bcrypt}$2a$10$tBzzQtR/C/DcnuNImrTuy.WUc/Maf2Jvj2nArecvfZtldErs5P7Qa")
 				  .roles("VTAS")
 				  .build();
 
-		UserDetails usuarioLulu = User.withDefaultPasswordEncoder()
-				  .username("Lulu")
-				  .password("passlulu")
+		UserDetails usuarioLulu = User.withUsername("Lulu")
+				  .password("{bcrypt}$2a$10$1v1J6dEhK8BTMtIEaXPcm.izLDYSZ473Fjn19EQQ6ZrFB4BXLOkMC")
 				  .roles("SISTEMAS")
 				  .build();
 		
