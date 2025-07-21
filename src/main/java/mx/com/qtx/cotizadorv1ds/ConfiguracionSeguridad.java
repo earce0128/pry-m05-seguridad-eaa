@@ -13,13 +13,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,18 +31,6 @@ import mx.com.qtx.cotizadorv1ds.seguridad.web.FiltroTokensJwt_SS;
 public class ConfiguracionSeguridad {
 	
 	private static Logger bitacora = LoggerFactory.getLogger(ConfiguracionSeguridad.class);
-	
-	// Permite el acceso de todo lo que esté autenticado
-//	@Bean
-//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		
-//		http.authorizeHttpRequests((autorize) -> autorize.anyRequest().authenticated())
-//			.httpBasic(Customizer.withDefaults())
-//			.formLogin(Customizer.withDefaults());
-//		
-//		return http.build();
-//	}
-	
 	
 	@Bean
 	@Order(1)	
@@ -102,6 +85,52 @@ public class ConfiguracionSeguridad {
 		return patronUrlsXatender;
 	}
 	
+	// Utiliza un esquema personalizado de BD con JDBC
+	@Bean
+	UserDetailsService getGestorBdUsuariosPersonalizada(DataSource dataSource) {
+
+		bitacora.trace("getGestorBdUsuariosPersonalizada()");
+		HikariDataSource hds = (HikariDataSource) dataSource;
+		bitacora.debug("Se ha instanciado data source mysql que apunta a BD:" + hds.getJdbcUrl());
+
+		// Se usa una BD Personalizada. Ya debe contener los datos de usuarios y roles
+		final String QUERY_DATOS_USUARIO_X_NOMBRE = "SELECT usr_nombre, usr_paswd, usr_habilitado "
+				+ "FROM usuario WHERE usr_nombre = ?";
+
+		// Los roles deben estar escritos en los registros de la base de datos con el
+		// prefijo "ROLE_"
+		// Por ejemplo, ROLE_AGENTE o ROLE_LOGISTICA
+		final String QUERY_ROLES_X_USUARIO = "SELECT usr_nombre, aut_nombre " + "FROM usuario, autoridad "
+				+ "WHERE usr_nombre = ? " + "AND usr_nombre = aut_nombre_usr";
+
+		JdbcDaoImpl gestorBdUsuariosPersonalizada = new JdbcDaoImpl();
+		gestorBdUsuariosPersonalizada.setDataSource(dataSource);
+		gestorBdUsuariosPersonalizada.setUsersByUsernameQuery(QUERY_DATOS_USUARIO_X_NOMBRE);
+		gestorBdUsuariosPersonalizada.setAuthoritiesByUsernameQuery(QUERY_ROLES_X_USUARIO);
+
+		return gestorBdUsuariosPersonalizada;
+	}
+	
+	@Bean
+    AuthenticationManager publicarAuthenticationManagerDesdeConfiguracion(
+        AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    	bitacora.trace("publicarAuthenticationManagerDesdeConfiguracion()");
+    	AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
+    	bitacora.debug("authenticationManager instanciado:" + authenticationManager.getClass().getName());
+        return authenticationManager;
+    }
+	
+	// Permite el acceso de todo lo que esté autenticado
+//	@Bean
+//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		
+//		http.authorizeHttpRequests((autorize) -> autorize.anyRequest().authenticated())
+//			.httpBasic(Customizer.withDefaults())
+//			.formLogin(Customizer.withDefaults());
+//		
+//		return http.build();
+//	}
+
 	// Permite configurar las reglas de autenticación
 	//@Bean
 //	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -220,39 +249,6 @@ public class ConfiguracionSeguridad {
 //		return gestorUsuariosBdSeg;
 //	}
 	
-	// Utiliza un esquema personalizado de BD con JDBC
-	@Bean
-	UserDetailsService getGestorBdUsuariosPersonalizada(DataSource dataSource) {
 
-		bitacora.trace("getGestorBdUsuariosPersonalizada()");
-		HikariDataSource hds = (HikariDataSource) dataSource;
-		bitacora.debug("Se ha instanciado data source mysql que apunta a BD:" + hds.getJdbcUrl());
-
-		// Se usa una BD Personalizada. Ya debe contener los datos de usuarios y roles
-		final String QUERY_DATOS_USUARIO_X_NOMBRE = "SELECT usr_nombre, usr_paswd, usr_habilitado "
-				+ "FROM usuario WHERE usr_nombre = ?";
-
-		// Los roles deben estar escritos en los registros de la base de datos con el
-		// prefijo "ROLE_"
-		// Por ejemplo, ROLE_AGENTE o ROLE_LOGISTICA
-		final String QUERY_ROLES_X_USUARIO = "SELECT usr_nombre, aut_nombre " + "FROM usuario, autoridad "
-				+ "WHERE usr_nombre = ? " + "AND usr_nombre = aut_nombre_usr";
-
-		JdbcDaoImpl gestorBdUsuariosPersonalizada = new JdbcDaoImpl();
-		gestorBdUsuariosPersonalizada.setDataSource(dataSource);
-		gestorBdUsuariosPersonalizada.setUsersByUsernameQuery(QUERY_DATOS_USUARIO_X_NOMBRE);
-		gestorBdUsuariosPersonalizada.setAuthoritiesByUsernameQuery(QUERY_ROLES_X_USUARIO);
-
-		return gestorBdUsuariosPersonalizada;
-	}
-	
-	@Bean
-    AuthenticationManager publicarAuthenticationManagerDesdeConfiguracion(
-        AuthenticationConfiguration authenticationConfiguration) throws Exception {
-    	bitacora.trace("publicarAuthenticationManagerDesdeConfiguracion()");
-    	AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
-    	bitacora.debug("authenticationManager instanciado:" + authenticationManager.getClass().getName());
-        return authenticationManager;
-    }
 
 }
