@@ -40,7 +40,8 @@ public class ConfiguracionSeguridad {
 		http.securityMatchers(config -> config.requestMatchers("/api/**","/api/autenticacion"))
 			.authorizeHttpRequests((authorize) ->  authorize
 			     .requestMatchers("/api/autenticacion").permitAll()
-			     .requestMatchers("/api/**").hasRole("VTAS")
+			     .requestMatchers("/api/cot/**").hasRole("VTAS")
+			     .requestMatchers("/api/comp/**").hasAnyRole("ADMIN","SISTEMAS")
 			)
 			.csrf(config -> config.disable()) // Se deshabilita
 			.formLogin(config -> config.disable()) // Se deshabilita
@@ -64,7 +65,7 @@ public class ConfiguracionSeguridad {
 				.requestMatchers("/vistaComodin.html").permitAll()
 				.requestMatchers("/infoGeneral","/vistaInformacion.html").permitAll()
 				.requestMatchers("/buscarCotizacion","/vistaBuscarCotizacion").hasRole("VTAS")
-				.requestMatchers("/buscarCompPorCat").hasAnyRole("SISTEMAS","ADMIN")
+				.requestMatchers("/buscarCompPorCat","/vistaBuscarCompPorCat").hasAnyRole("SISTEMAS","ADMIN")
 				.requestMatchers("/altaUsuario").hasRole("ADMIN")
 			    .requestMatchers("/**").authenticated()
 			)

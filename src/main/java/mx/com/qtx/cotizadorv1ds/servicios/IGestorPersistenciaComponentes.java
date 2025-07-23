@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IGestorPersistenciaComponentes {
-	ComponenteDTO getComponenteDtoXID(String id) throws SQLException; 
+	boolean insertarComponenteDto(ComponenteDTO dto) throws SQLException;
+	ComponenteDTO getComponenteDtoXID(String id) throws SQLException;
+	List<ComponenteDTO> getComponentesXTipo(String tipo) throws SQLException;
 	Map<ComponenteDTO, Integer> getSubcomponentes(String id) throws SQLException;
 	PromocionDTO getPromocionXID(Long numPromocion) throws SQLException;
 	List<DetallePromocionDTO> getDetallesPromocion(Long numPromocion) throws SQLException;

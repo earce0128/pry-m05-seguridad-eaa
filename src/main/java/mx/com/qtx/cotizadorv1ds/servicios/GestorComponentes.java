@@ -1,6 +1,7 @@
 package mx.com.qtx.cotizadorv1ds.servicios;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,7 +14,7 @@ import mx.com.qtx.cotizadorv1ds.core.componentes.Componente;
 import mx.com.qtx.cotizadorv1ds.core.componentes.PcBuilder;
 import mx.com.qtx.cotizadorv1ds.core.promos.Promocion;
 import mx.com.qtx.cotizadorv1ds.core.promos.PromocionBuilder;
-//import mx.com.qtx.cotizadorv1ds.persistencia.ComponenteDao;
+import mx.com.qtx.cotizadorv1ds.persistencia.ComponenteDao;
 
 @Service
 public class GestorComponentes implements IServicioComponentes {
@@ -23,7 +24,7 @@ public class GestorComponentes implements IServicioComponentes {
 
 	public GestorComponentes() {
 		super();
-		//this.gestorPersistencia = new ComponenteDao();
+		this.gestorPersistencia = new ComponenteDao();
 	}
 
 	@Override
@@ -73,6 +74,24 @@ public class GestorComponentes implements IServicioComponentes {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public List<Componente> getComponentesXCategoria(String categoria) {
+		List<Componente> lista = new ArrayList<>();
+		try {
+			List<ComponenteDTO> componentesDTO = this.gestorPersistencia.getComponentesXTipo(categoria);
+			if(componentesDTO.size()>0) {
+				for(ComponenteDTO componenteDTO : componentesDTO) {
+					Componente componente = this.getComponenteXID(componenteDTO.getIdComponente());
+					lista.add(componente);
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return lista;
 	}
 
 	private Componente crearPc(ComponenteDTO componenteDTO) throws SQLException {
@@ -215,5 +234,7 @@ public class GestorComponentes implements IServicioComponentes {
 		          .forEach(dsctoI->mapDsctos.put(dsctoI.getCantidad(), dsctoI.getDscto()));
 		return mapDsctos;
 	}
+
+	
 
 }

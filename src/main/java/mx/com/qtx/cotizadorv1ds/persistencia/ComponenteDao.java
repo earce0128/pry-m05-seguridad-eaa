@@ -62,7 +62,36 @@ public class ComponenteDao implements IGestorPersistenciaComponentes {
             }
         }
     }
-
+	
+	@Override
+	public List<ComponenteDTO> getComponentesXTipo(String tipo) throws SQLException {
+		String sql = "SELECT * FROM componente WHERE tipo = ?";
+        List<ComponenteDTO> lista = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, tipo);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ComponenteDTO dto = new ComponenteDTO();
+                    dto.setIdComponente(rs.getString("id_componente"));
+                    dto.setDescripcion(rs.getString("descripcion"));
+                    dto.setMarca(rs.getString("marca"));
+                    dto.setModelo(rs.getString("modelo"));
+                    dto.setDescripcion(rs.getString("descripcion"));
+                    dto.setCosto(rs.getBigDecimal("costo"));
+                    dto.setPrecioBase(rs.getBigDecimal("precio_base"));
+                    dto.setTipo(rs.getString("tipo"));
+                    dto.setCapacidadAlm(rs.getString("capacidad_alm"));
+                    dto.setMemoria(rs.getString("memoria"));
+                    dto.setNumPromocion(rs.getLong("num_promocion"));
+                    lista.add(dto);
+                }
+            }
+        }
+        return lista;
+	}
+	
+	@Override
     public boolean insertarComponenteDto(ComponenteDTO dto) throws SQLException {
         String sql = "INSERT INTO componente (id_componente, descripcion, marca, modelo, costo, precio_base, tipo, capacidad_alm, memoria, num_promocion)"
                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -221,6 +250,8 @@ public class ComponenteDao implements IGestorPersistenciaComponentes {
         }
         return lista;
     }
+
+	
 
 
 }

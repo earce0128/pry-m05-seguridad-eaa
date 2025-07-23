@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.ComponenteRest;
 import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.CorsFilter;
 import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.CotizacionRest;
 import mx.com.qtx.cotizadorv1ds.web.api.jaxrs.GenericExceptionMapper;
@@ -20,6 +21,7 @@ public class ConfiguracionJersey extends ResourceConfig {
 		bitacora.trace("ConfiguracionJersey()");
 		
 		this.register(CotizacionRest.class);
+		this.register(ComponenteRest.class);
 		this.register(AutenticacionRest.class);
 		this.register(CorsFilter.class);
 		this.register(GenericExceptionMapper.class);

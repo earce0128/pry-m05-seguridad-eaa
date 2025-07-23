@@ -1,8 +1,11 @@
 package mx.com.qtx.cotizadorv1ds.casosDeUso;
 
+import java.util.List;
+
 import mx.com.qtx.cotizadorv1ds.core.ICotizador;
 import mx.com.qtx.cotizadorv1ds.core.IServicioComponentes;
 import mx.com.qtx.cotizadorv1ds.core.componentes.Componente;
+import mx.com.qtx.cotizadorv1ds.core.componentes.TarjetaVideo;
 import mx.com.qtx.cotizadorv1ds.core.cotizaciones.Cotizacion;
 import mx.com.qtx.cotizadorv1ds.core.promos.Promocion;
 import mx.com.qtx.cotizadorv1ds.servicios.CotizadorPersistente;
@@ -12,7 +15,21 @@ public class CotizadorBDTest {
 
 	public static void main(String[] args) {
 		//testGenerarCotizacion();
+		//testBuscarComponentesXCategoria(); 
+	}
 
+	private static void testBuscarComponentesXCategoria() {
+		IServicioComponentes gestorComponentes = getServicioComponentes();
+		
+		List<Componente> componentes = gestorComponentes.getComponentesXCategoria("tarjeta-video");
+		System.out.println("Tamaño: " + componentes.size());
+		for(Componente componente : componentes) {
+			
+			System.out.println("Tipo de Componente: " + componente.getClass());
+			
+			TarjetaVideo tv = (TarjetaVideo) componente;
+			System.out.println(tv.toString());
+		}
 	}
 
 	private static void testGenerarCotizacion() {

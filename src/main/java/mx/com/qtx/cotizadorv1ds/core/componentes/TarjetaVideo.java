@@ -19,9 +19,10 @@ public class TarjetaVideo extends ComponenteSimple {
 		this.memoria = memoria;
 	}
 	
-//	public BigDecimal cotizar(int cantidadI) {
-//		return PromocionUtil.calcularPrecioPromocion3X2(cantidadI, this.precioBase);
-//	}
+	@Override
+	public String toString() {
+		return super.toString() + " [memoria=" + memoria + "]";
+	}
 
 	@Override
 	public String getCategoria() {
