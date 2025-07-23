@@ -76,6 +76,16 @@ public class Pc extends Componente {
 		return "PC";
 	}
 	
+	
+	
+	public List<ComponenteSimple> getSubComponentes() {
+		return subComponentes;
+	}
+
+	public void setSubComponentes(List<ComponenteSimple> subComponentes) {
+		this.subComponentes = subComponentes;
+	}
+
 	@Override
 	public void mostrarCaracteristicas() {
 		super.mostrarCaracteristicas();
